@@ -13,6 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/**
+ *############################################################### ROTAS GET
+ * tela inicial com a grid dos produtos
+ */
+
+
+Route::get('/','ControllerProducts@index')->name('product.index');
+Route::get('/cadastro','ControllerProducts@create')->name('product.form.new');
+Route::get('/editar/{id}', 'ControllerProducts@edit')->name('product.edit');
+Route::get('/deletar/{id}', 'ControllerProducts@destroy')->name('product.delete');
+
+Route::post('/create','ControllerProducts@store')->name('new.product');
+Route::post('/alterar/{id}','ControllerProducts@update')->name('update.product');
+
+
+
+
+Route::post('/importar','ControllerProducts@import')->name('import.product');
+
+
+
