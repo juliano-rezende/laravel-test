@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Session;
+use Illuminate\Support\Facades\Session;
 
+/**
+ * Class ControllerProducts
+ * @package App\Http\Controllers
+ */
 class ControllerProducts extends Controller
 {
 
@@ -63,9 +67,17 @@ class ControllerProducts extends Controller
     }
 
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function import(Request $request)
     {
+        if($request->file('file')->isValid()){
 
+            $request->file('file')->store('products');
+
+        }
     }
 
     /**

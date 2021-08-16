@@ -21,12 +21,8 @@
                 <li class="breadcrumb-item active" aria-current="page">Cadastro</li>
             </ol>
         </nav>
-        @if($errors->any())
-            <div class="alert alert-danger">
-                @foreach($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach()
-            </div>
+        @if(Session::has('error_msg'))
+            <div class="alert alert-danger">{{ Session::get('error_msg') }}</div>
         @endif
         @if(Session::has('success_msg'))
             <div class="alert alert-success">{{ Session::get('success_msg') }}</div>
@@ -59,7 +55,8 @@
             </div>
         </form>
         <hr>
-        <form action="{{route('import.product')}}" method="post" id="import">
+        <form action="{{route('import.product')}}" method="post" enctype="multipart/form-data">
+            @csrf
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Importar lista de produtos (.csv)</h5>
@@ -67,7 +64,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-6">
-                            <input type="file" class="form-control" id="description" required placeholder="Digite a descrição do produto">
+                            <input type="file" class="form-control" id="file" name="file">
                         </div>
                     </div>
                 </div>
