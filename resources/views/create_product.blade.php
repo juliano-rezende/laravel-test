@@ -64,7 +64,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-6">
-                            <input type="file" class="form-control" id="file" name="file">
+                            <input type="file" class="form-control" id="csv" name="csv">
                         </div>
                     </div>
                 </div>

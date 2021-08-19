@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ImportCsv;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
+use League\Csv\Reader;
+
 
 /**
  * Class ControllerProducts
@@ -73,9 +77,23 @@ class ControllerProducts extends Controller
      */
     public function import(Request $request)
     {
-        if($request->file('file')->isValid()){
+        if ($request->file('csv')->isValid()) {
 
-            $request->file('file')->store('products');
+            // Define um aleatório para o arquivo baseado no timestamps atual
+            $name = uniqid(date('HisYmd'));
+
+            // Recupera a extensão do arquivo
+            $extension = $request->file('csv')->extension();
+
+            // Define finalmente o nome
+            $nameFile = "{$name}.csv";
+
+            // Faz o upload:
+            $env = $request->file('csv')->storeAs('products', $nameFile);
+
+            \App\Jobs\importCsv::dispatch($nameFile)->delay(now()->addSeconds('5')); //15 seconds
+
+            return "Importação do arquivo {$nameFile} realizada com sucesso";
 
         }
     }

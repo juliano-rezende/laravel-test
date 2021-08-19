@@ -12,10 +12,11 @@ use App\Models\Product;
 use Illuminate\Support\Facades\File;
 use League\Csv\Reader;
 
-class importCsv implements ShouldQueue
+class ImportCsv implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-protected  $fileName;
+
+    protected  $fileName;
     /**
      * Create a new job instance.
      *
@@ -33,15 +34,24 @@ protected  $fileName;
      */
     public function handle()
     {
-        $csv = Reader::createFromPath(storage_path('app/products/temp/' . $this->fileName), 'r');
+
+        $csv = Reader::createFromPath(storage_path('app/products/' . $this->fileName.''), 'r');
         $csv->setHeaderOffset(0);
-        foreach ($csv as $row) {
-            Product::create([
-                'description' => $row['nome'],
-                'quantity' => $row['quantidade'],
-                'amount' => $row['valor']
-            ]);
+
+        $header = $csv->getHeader(); //returns the CSV header record
+        $records = $csv->getRecords(); //returns all the CSV records as an Iterator object
+
+        foreach ($csv as $index => $row) {
+            foreach ($row as $line) {
+                $line = explode(";", $line);
+                Product::create([
+                    'description' => $line[0],
+                    'quantity' => $line[1],
+                    'amount' => $line[2]
+                ]);
+            }
         }
-        File::delete(storage_path('app/products/temp/' . $this->filename));
+
+
     }
 }
