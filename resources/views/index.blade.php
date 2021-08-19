@@ -81,7 +81,26 @@
 <script src="{{ asset('js/datatable/dataTables.responsive.min.js') }}"></script>
 <script type="application/javascript">
     $(document).ready( function () {
-        $('#myTable').DataTable();
+        $('#myTable').DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true,
+            "language": {
+                "search": "Pesquisar: _INPUT_",
+                "lengthMenu": "",
+                "zeroRecords": "Não encotramos registros",
+                "info": "Páginas _PAGE_ de _PAGES_",
+                "infoEmpty": "Nenhum registro disponível",
+                "infoFiltered": "(filtrado do total de _MAX_ registros)",
+                "paginate": {
+                    "previous": "Anterior",
+                    "next": "Proximo"
+                }
+            }
+        });
     });
 </script>
 </body>

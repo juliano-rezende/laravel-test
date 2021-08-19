@@ -27,7 +27,7 @@ class ControllerProducts extends Controller
     {
         setlocale(LC_MONETARY, 'pt_BR');
 
-        $products = (new Product())->limit(20)->get();
+        $products = (new Product())->limit(50)->get();
 
         return view('index', compact('products'));
 
