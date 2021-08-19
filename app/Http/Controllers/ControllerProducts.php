@@ -93,7 +93,10 @@ class ControllerProducts extends Controller
 
             \App\Jobs\importCsv::dispatch($nameFile)->delay(now()->addSeconds('5')); //15 seconds
 
-            return "Importação do arquivo {$nameFile} realizada com sucesso";
+            //store status message
+            Session::flash('success_msg', 'Arquivo importado com sucesso!');
+
+            return redirect()->route('product.form.new');
 
         }
     }
