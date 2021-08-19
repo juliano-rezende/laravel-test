@@ -16,7 +16,8 @@ class ImportCsv implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected  $fileName;
+    protected $fileName;
+
     /**
      * Create a new job instance.
      *
@@ -35,21 +36,20 @@ class ImportCsv implements ShouldQueue
     public function handle()
     {
 
-        $csv = Reader::createFromPath(storage_path('app/products/' . $this->fileName.''), 'r');
+        $csv = Reader::createFromPath(storage_path('app/products/' . $this->fileName . ''), 'r');
         $csv->setHeaderOffset(0);
 
         $header = $csv->getHeader(); //returns the CSV header record
         $records = $csv->getRecords(); //returns all the CSV records as an Iterator object
 
-        foreach ($csv as $index => $row) {
-            foreach ($row as $line) {
-                $line = explode(";", $line);
-                Product::create([
-                    'description' => $line[0],
-                    'quantity' => $line[1],
-                    'amount' => $line[2]
-                ]);
-            }
+
+        foreach ($csv as $line) {
+            $line = explode(";", $line);
+            Product::create([
+                'description' => $line[0],
+                'quantity' => $line[1],
+                'amount' => $line[2]
+            ]);
         }
 
 
