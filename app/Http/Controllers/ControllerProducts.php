@@ -91,7 +91,7 @@ class ControllerProducts extends Controller
             // Faz o upload:
             $env = $request->file('csv')->storeAs('products', $nameFile);
 
-            \App\Jobs\importCsv::dispatch($nameFile)->delay(now()->addSeconds('5')); //15 seconds
+            \App\Jobs\importCsv::dispatch($nameFile)->delay(now()->addSeconds('15')); //15 seconds
 
             //store status message
             Session::flash('success_msg', 'Arquivo importado com sucesso!');
