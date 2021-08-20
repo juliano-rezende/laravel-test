@@ -33,7 +33,7 @@
             @csrf
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Editar produto</h5>
+                    <a href="{{URL::to('')."/"}}" class="btn btn-warning float-left" > Voltar a tela inicial</a>
                 </div>
                 <div class="card-body">
                     <div class="row">
