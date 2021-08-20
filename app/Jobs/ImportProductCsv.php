@@ -12,7 +12,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\File;
 use League\Csv\Reader;
 
-class ImportCsv implements ShouldQueue
+class ImportProductCsv implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -41,7 +41,6 @@ class ImportCsv implements ShouldQueue
 
         $header = $csv->getHeader(); //returns the CSV header record
         $records = $csv->getRecords(); //returns all the CSV records as an Iterator object
-
 
         foreach ($csv as $line) {
             $line = explode(";", $line);

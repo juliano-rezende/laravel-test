@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\ImportCsv;
+use App\Jobs\ImportProductCsv;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Session;
@@ -91,7 +91,7 @@ class ControllerProducts extends Controller
             // Faz o upload:
             $env = $request->file('csv')->storeAs('products', $nameFile);
 
-            \App\Jobs\importCsv::dispatch($nameFile)->delay(now()->addSeconds('15')); //15 seconds
+            \App\Jobs\ImportProductCsv::dispatch($nameFile)->delay(now()->addSeconds('15')); //15 seconds
 
             //store status message
             Session::flash('success_msg', 'Arquivo importado com sucesso!');
