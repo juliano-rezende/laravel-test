@@ -17,7 +17,6 @@ use League\Csv\Reader;
 class ControllerProducts extends Controller
 {
 
-
     /**
      * Display a listing of the resource.
      *
@@ -26,11 +25,8 @@ class ControllerProducts extends Controller
     public function index()
     {
         setlocale(LC_MONETARY, 'pt_BR');
-
         $products = (new Product())->limit(50)->get();
-
         return view('index', compact('products'));
-
     }
 
     /**
@@ -57,16 +53,12 @@ class ControllerProducts extends Controller
             'quantity' => 'required',
             'amount' => 'required'
         ]);
-
         //get post data
         $postData = $request->all();
-
         //insert post data
         $createProduct = (new Product())->create($postData);
-
         //store status message
         Session::flash('success_msg', 'Produto criado com sucesso!');
-
         return redirect()->route('product.form.new');
     }
 
@@ -78,26 +70,18 @@ class ControllerProducts extends Controller
     public function import(Request $request)
     {
         if ($request->file('csv')->isValid()) {
-
             // Define um aleatório para o arquivo baseado no timestamps atual
             $name = uniqid(date('HisYmd'));
-
             // Recupera a extensão do arquivo
             $extension = $request->file('csv')->extension();
-
             // Define finalmente o nome
             $nameFile = "{$name}.csv";
-
             // Faz o upload:
             $env = $request->file('csv')->storeAs('products', $nameFile);
-
             \App\Jobs\ImportProductCsv::dispatch($nameFile)->delay(now()->addSeconds('15')); //15 seconds
-
             //store status message
             Session::flash('success_msg', 'Arquivo importado com sucesso!');
-
             return redirect()->route('product.form.new');
-
         }
     }
 
@@ -121,7 +105,6 @@ class ControllerProducts extends Controller
     public function edit($id)
     {
         $product = (new Product())->find($id);
-
         return view('edit_product', compact('product'));
 
     }
@@ -135,7 +118,6 @@ class ControllerProducts extends Controller
      */
     public function update(Request $request, $id)
     {
-
         //validate post data
         $this->validate($request, [
             'description' => 'required',
@@ -148,7 +130,6 @@ class ControllerProducts extends Controller
         $user->quantity = $request->quantity;
         $user->amount = str_replace(',', '.', str_replace('.', '', $request->amount));
         $user->save();
-
 
         //store status message
         Session::flash('success_msg', 'Produto editado com sucesso!!');
@@ -165,14 +146,10 @@ class ControllerProducts extends Controller
      */
     public function destroy($id)
     {
-
         //update post data
         $remove = (new Product())->find($id)->delete();
-
         //store status message
         Session::flash('success_msg', 'Produto removido com sucesso!!');
-
         return redirect()->route('product.index');
-
     }
 }

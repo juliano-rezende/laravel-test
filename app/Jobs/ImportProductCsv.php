@@ -15,7 +15,6 @@ use League\Csv\Reader;
 class ImportProductCsv implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     protected $fileName;
 
     /**
@@ -35,7 +34,6 @@ class ImportProductCsv implements ShouldQueue
      */
     public function handle()
     {
-
         $csv = Reader::createFromPath(storage_path('app/products/' . $this->fileName . ''), 'r');
         $csv->setHeaderOffset(0);
 
@@ -50,7 +48,5 @@ class ImportProductCsv implements ShouldQueue
                 'amount' => $line[2]
             ]);
         }
-
-
     }
 }

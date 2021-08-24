@@ -26,7 +26,6 @@ Route::get('/deletar/{id}', 'ControllerProducts@destroy')->name('product.delete'
 
 Route::post('/create','ControllerProducts@store')->name('new.product');
 Route::post('/alterar/{id}','ControllerProducts@update')->name('update.product');
-
 Route::post('/importar','ControllerProducts@import')->name('import.product');
 
 
